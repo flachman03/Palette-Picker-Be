@@ -84,6 +84,44 @@ app.post('/api/v1/palettes', (request, response) => {
   })
 })
 
+app.put('/api/v1/projects/:id', (request, response) => {
+  const newProject = request.body;
+
+  if(!newProject.title) {
+    return response.status(422)
+    .json({ Error: `Your new project was not updated. You are missing the title property`})
+  }
+
+  database('projects').where('id', request.params.id).select()
+    .update( newProject )
+    .then(project => {
+      return response.status(202).json({ project })
+    })
+    .catch(error => {
+      return response.status(404).json({ error })
+    })
+})
+
+app.patch('/api/v1/palettes/:id', (request, response) => {
+  const newColor = request.body;
+  const colorRequired = ['color_1', 'color_2', 'color_3', 'color_4', 'color_5'];
+  let colorKey = Object.keys(newColor);
+
+
+    if(colorRequired.indexOf(colorKey[0]) < 0) {
+      return response.status(422)
+      .json({ Error: `Your new project was not updated. You are missing the ${colorKey} property`})
+    } 
+    database('palettes').where('id', request.params.id).select()
+      .update(newColor).returning('*')
+      .then(palette => {
+        return response.status(202).json( ...palette )
+      })
+      .catch(error => {
+        return response.status(404).json({ error })
+      })
+})
+
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get('port')}`)
 })
