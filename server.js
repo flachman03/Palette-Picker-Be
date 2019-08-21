@@ -122,6 +122,38 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
       })
 })
 
+app.delete('/api/v1/projects/:id', (request, response) => {
+  const { id } = request.params;
+
+  database('projects').where({ id }).del()
+    .then(result => {
+      if(result) {
+        response.status(204).json();
+      } else {
+        response.status(404).json({Error: `No project found with the id of ${id}`})
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+});
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const { id } = request.params;
+
+  database('palettes').where({ id }).del()
+    .then(result => {
+      if(result) {
+        response.status(204).send();
+      } else {
+        response.status(404).json({Error: `No palette found with the id of ${id}`})
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+});
+
 app.listen(app.get("port"), () => {
   console.log(`Listening on port ${app.get('port')}`)
 })
