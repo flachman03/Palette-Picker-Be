@@ -28,10 +28,17 @@ app.get('/api/v1/palettes', (request, response) => {
     .catch(error => response.status(500).json({error}))
 });
 
-app.get('/api/v1/projects/:id', (request, response) => {
+app.get('/api/v1/projects/:id', (request, response) => {  
   database('projects').where('id', request.params.id).select()
+  .then(project => {
+    if (project.length > 0) {
+      return project
+    } else {
+      response.status(404).json('ERROR: Cannot find project id')
+    }
+  })
   .then((project) => {
-    response.status(200).json(project);
+   response.status(200).json(...project);
   })
   .catch((error) => {
     response.status(500).json({ error });
@@ -41,7 +48,7 @@ app.get('/api/v1/projects/:id', (request, response) => {
 app.get('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', request.params.id).select()
   .then((palette) => {
-    response.status(200).json(palette);
+    response.status(200).json(...palette);
   })
   .catch((error) => {
     response.status(500).json({ error });
