@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test jest --exit"
+    "test": "jest --forceExit",
+    "rtest": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
