@@ -1,9 +1,16 @@
 language: node_js
 node_js:
-  - "node"
+- node
 services:
-  - postgresql
+- postgresql
 before_script:
-  - psql -c 'CREATE DATABASE pplibrary_test;' -U postgres
+- psql -c 'CREATE DATABASE pplibrary_test;' -U postgres
 notifications:
-  email: false 
+  email: false
+deploy:
+  provider: heroku
+  api_key:
+    secure: dLLOguVm+RQMsMsLuT4+vFgKqx7W87aKev9ThZ/d1tw1aYiO6kN3BLOiEKlNa7o2prX3PufLplGDPIEbSIqobQH2ugtCLaPyJtkfuVNvOrB0/kKGfPkrArOx7QDceMxqaRwxHBABhZW5baPjIRaTGuU5dQ+76/zXtzJHZZwa5wJhSDFH3qrW4/cIl34UZNBw3srbpp4m37ScTkPeDxS3cAx5lbZlMu2oZZE7Kvad9zl351qUD8fBZjhr6rQk5e8Zwn48rPqtJOrAGpdge6e1i5x+wtp5wNfHfT2SVFjU3j/pedzvebYkVjSX4JUEn8LjUIRIaZ32I5IjwyUxaAQB1/Ms28/K+K2KJIrXY8qMp2lGHfwKOVSNpA36EHZX7CinkB+IYEpvvMYQdAGt80lRWY8tePolmI/ALf/AcAyVumUsQWmmd2n2GvT5JwH05mMSZOUSRPtUBcotSPDeggbqeO95EVU8Sw6EeH+9nHAx66adE0PkKwdRT4wR6Z8PDpIWPxqnRXiLcJoqEd3AwyYtVxRno7fE52I+c4y17q9ol9K3wDwSXWRUGofe5gnGuQoCcgOxDZTC28a6NCq8C2mDqOM24FhCTrZMjLmP6sFifV1RUYpXFVNplcVU7cX+4/Lf2hjB4KIoCZrrTg/cZTTsxqwSZe3SB7UuUQo40sQcgAY=
+  app: palettepicker-api
+  on:
+    repo: emilydittmer/palette-picker-be
