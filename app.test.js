@@ -14,7 +14,7 @@ describe('Server', () => {
 })
 describe('API', () => {
   describe('GET /api/v1/projects', () => {
-    it('should return a status of 200 and all projects', async () => {
+    xit('should return a status of 200 and all projects', async () => {
       const expectedProjects = await database('projects').first()
         .then(project => [project.title, project.id])
 
@@ -26,7 +26,7 @@ describe('API', () => {
     })
   })
   describe('GET /api/v1/palettes', () => {
-    it('should return a status of 200 and all palettes', async () => {
+    xit('should return a status of 200 and all palettes', async () => {
       const expectedPallete = await database('palettes').first()
         .then(palette => [palette.id, palette.project_id, palette.color_1, palette.color_2, palette.color_3, palette.color_4, palette.color_5])
       const response = await request(app).get('/api/v1/palettes')
@@ -38,7 +38,7 @@ describe('API', () => {
     })
   })
   describe('GET /api/v1/projects/:id', () => {
-    it('should return a status of 200 and one project by its id', async () => {
+    xit('should return a status of 200 and one project by its id', async () => {
       const expectedProjectId = await database('projects').first()
         .then(project => project.id)
       
@@ -49,7 +49,7 @@ describe('API', () => {
       expect(project).toEqual(expectedProjectId)
     })
 
-    it('should return a 404 error if cannot find project by id', async () => {
+    xit('should return a 404 error if cannot find project by id', async () => {
       const expected = 'ERROR: Cannot find project id'
 
       const response = await request(app).get('/api/v1/projects/4')
@@ -62,7 +62,7 @@ describe('API', () => {
 
 
   describe('PATCH /api/v1/palettes/:id', () => {
-    it('should return a 422 status if a property is missing in the patch', async () => {
+    xit('should return a 422 status if a property is missing in the patch', async () => {
       const { id } = await database('palettes').first('id');
       const requestBody = {};
 
@@ -72,7 +72,7 @@ describe('API', () => {
       expect(response.body.error).toEqual(`Your new project was not updated. You are missing the  property`)
     })
 
-    it('should return a 202 status if palette has been updated', async () => {
+    xit('should return a 202 status if palette has been updated', async () => {
       const { id } = await database('palettes').first('id');
       const requestBody = {color_1:'#ffffff'};
 
@@ -93,14 +93,14 @@ describe('API', () => {
   })
 
   describe('DELETE /projects/:id', () => {
-    it('should return a 204 error and the delete project', async () => {
+    xit('should return a 204 error and the delete project', async () => {
       const { id } = await database('projects').first('id');
       const response = await request(app).delete(`/api/v1/projects/${id}`);
 
       expect(response.status).toBe(204)
     })
 
-    it('should return a 404 error if a project was not deleted', async () => {
+    xit('should return a 404 error if a project was not deleted', async () => {
       const response = await request(app).delete('/api/v1/project/0');
 
       expect(response.status).toBe(404);
@@ -108,7 +108,7 @@ describe('API', () => {
   })
 
   describe('DELETE /palettes/:id', () => {
-    it('should return a 204 and the delete palette', async () => {
+    xit('should return a 204 and the delete palette', async () => {
       const { id } = await database('palettes').first('id');
       const response = await request(app).delete(`/api/v1/palettes/${id}`);
 
