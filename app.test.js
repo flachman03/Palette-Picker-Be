@@ -59,4 +59,31 @@ describe('API', () => {
       expect(project).toEqual(expected)
     })
   })
+
+  describe(' GET /api/v1/palettes/:id', () => {
+    it('should return a status of 200 and one palette by the id', async () => {
+      const expectedPaletteId = await database('palettes').first()
+        .then(palette => palette.id)
+
+      const response = await request(app).get('/api/v1/palettes/1')
+      const palette = response.body.id
+
+      expect(response.status).toBe(200)
+      expect(palette).toEqual(expectedPaletteId)
+    })
+
+    it('should return a status of 404 if cant find a palette by id', async () => {
+      const expectedResponse = 'ERROR: Cannot find palette id'
+
+      const response = request(app).get('/api/v1/palettes/6')
+      const palette = response.body
+
+      expect(response.status).toBe(404)
+      expect(palette).toEqual(expectedResponse)
+    })
+  })
+
+  describe('POST /api/v1/projects', () => {
+    
+  })
 })

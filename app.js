@@ -47,6 +47,13 @@ app.get('/api/v1/projects/:id', (request, response) => {
 
 app.get('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', request.params.id).select()
+  .then(palette => {
+    if (palette.length > 0) {
+      return project
+    } else {
+      response.status(404).json('ERROR: Cannot find palette id')
+    }
+  })
   .then((palette) => {
     response.status(200).json(...palette);
   })
