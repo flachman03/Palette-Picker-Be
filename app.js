@@ -152,7 +152,7 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
       if(result) {
         response.status(204).send();
       } else {
-        response.status(404).json({Error: `No palette found with the id of ${id}`})
+        response.status(404).json({ error: `No palette found with the id of ${id}` })
       }
     })
     .catch(error => {

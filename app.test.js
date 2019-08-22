@@ -59,4 +59,34 @@ describe('API', () => {
       expect(project).toEqual(expected)
     })
   })
+
+  describe('DELETE /projects/:id', () => {
+    it('should return a 204 and the delete project', async () => {
+      const { id } = await database('projects').first('id');
+      const response = await request(app).delete(`/api/v1/projects/${id}`);
+
+      expect(response.status).toBe(204)
+    })
+
+    it('should return a 404 error if a project was not deleted', async () => {
+      const response = await request(app).delete('/api/v1/project/0');
+
+      expect(response.status).toBe(404);
+    })
+  })
+
+  describe('DELETE /palettes/:id', () => {
+    it('should return a 204 and the delete palette', async () => {
+      const { id } = await database('palettes').first('id');
+      const response = await request(app).delete(`/api/v1/palettes/${id}`);
+
+      expect(response.status).toBe(204)
+    })
+
+    it('should return a 404 error if a palette was not deleted', async () => {
+      const response = await request(app).delete('/api/v1/palettes/0');
+
+      expect(response.status).toBe(404);
+    })
+  })
 })
