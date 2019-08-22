@@ -116,7 +116,7 @@ app.patch('/api/v1/palettes/:id', (request, response) => {
 
     if(colorRequired.indexOf(colorKey[0]) < 0) {
       return response.status(422)
-      .json({ Error: `Your new project was not updated. You are missing the ${colorKey} property`})
+      .json({ error: `Your new project was not updated. You are missing the ${colorKey} property`})
     } 
     database('palettes').where('id', request.params.id).select()
       .update(newColor).returning('*')

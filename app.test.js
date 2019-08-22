@@ -60,8 +60,40 @@ describe('API', () => {
     })
   })
 
+
+  describe('PATCH /api/v1/palettes/:id', () => {
+    it('should return a 422 status if a property is missing in the patch', async () => {
+      const { id } = await database('palettes').first('id');
+      const requestBody = {};
+
+      const response = await request(app).patch(`/api/v1/palettes/${id}`).send(requestBody);
+
+      expect(response.status).toBe(422);
+      expect(response.body.error).toEqual(`Your new project was not updated. You are missing the  property`)
+    })
+
+    it('should return a 202 status if palette has been updated', async () => {
+      const { id } = await database('palettes').first('id');
+      const requestBody = {color_1:'#ffffff'};
+
+      const response = await request(app).patch(`/api/v1/palettes/${id}`).send(requestBody);
+
+      expect(response.status).toBe(202)
+    })
+
+    xit('should return a 404 status if palette could not be updated', async () => {
+      const id  = 0;
+      const requestBody = {color_1:'#ffffff'};
+
+      const response = await request(app).patch(`/api/v1/palettes/${id}`).send(requestBody);
+
+      expect(response.status).toBe(404)
+      expect(response.error).toEqual
+    })
+  })
+
   describe('DELETE /projects/:id', () => {
-    it('should return a 204 and the delete project', async () => {
+    it('should return a 204 error and the delete project', async () => {
       const { id } = await database('projects').first('id');
       const response = await request(app).delete(`/api/v1/projects/${id}`);
 
