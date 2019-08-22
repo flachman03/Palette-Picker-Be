@@ -85,10 +85,10 @@ describe('API', () => {
       const id  = 0;
       const requestBody = {color_1:'#ffffff'};
 
-      const response = await request(app).patch(`/api/v1/palettes/${id}`).send(requestBody);
+      const response = await request(app).patch(`/api/v1/palettes/0`).send(requestBody);
 
       expect(response.status).toBe(404)
-      expect(response.error).toEqual
+      expect(response.error).toEqual()
     })
   })
 
